@@ -14,6 +14,7 @@ N 입력받고 N 줄 반복 - for 문의 범위 N으로 설정, 한줄씩 입력
 
 **배열사용시 시간초과 되었음
 **Key 중복허용하지 않는 Map사용
+****HashMap은 정렬해주지 않아서 따로 정렬을 구현해야하고, TreeMap은 정렬까지 알아서 해줌
 */
 public class Main {
 
@@ -21,35 +22,26 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
-        Map<String,Integer> map = new HashMap<>();
-        List<String> key = new ArrayList<>(map.keySet());  // 키값 오름차순 정렬위해서 담아줄 리스트
-
+        Map<String,Integer> map = new TreeMap<>();
 
         for (int i = 0; i < N; i++) {
             String [] input = br.readLine().split("\\.");
-            String extension = input[1];
+            String extension = input[1];  // . 으로 잘라서 확장자 가져옴
 
 //            containsKey : 해당 값이 map의 키값에 있는지 체크해줌
-//            저장되어 있지 않다면 초기값이므로 list에도 넣어줘야한다.
             if (!map.containsKey(extension) ) {
-                key.add(input[1]);
                 map.put(extension,1);
             }
             else{
                 map.put(extension,map.get(extension)+1);
             }
-
         }
-//        System.out.println(map);
-//        System.out.println(key);
 
-        Collections.sort(key);  //정렬후 
         StringBuilder sb = new StringBuilder();
-
-        for (String s : key) {
-            sb.append(s +" "+map.get(s)+"\n"); //출력
+//        Map.Entry : key-value 쌍을 나타내는 객체,  entrySet() : get으로 key,value값 가져옴
+        for(Map.Entry<String,Integer> entry : map.entrySet()) {
+            sb.append(entry.getKey()+" "+entry.getValue()+"\n");
         }
-
         System.out.println(sb);
     }
 }
