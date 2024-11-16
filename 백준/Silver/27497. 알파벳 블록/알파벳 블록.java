@@ -23,8 +23,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Deque<String> deque = new ArrayDeque<>();
-        Stack<Integer> stack = new Stack<>();
+        Deque<String> deque = new ArrayDeque<>(); //알파벳저장
+        Stack<Integer> stack = new Stack<>(); //버튼 번호 저장
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
@@ -32,28 +32,8 @@ public class Main {
         for (int i = 0; i < n; i++) {
             String[] str = br.readLine().split(" ");
             int button = Integer.parseInt(str[0]);
-            if (button == 3 && deque.size() == 0) {
-                continue;
-            }
-            switch (button) {
-                case 1:
-                    deque.addLast(str[1]);
-                    stack.push(1);
-                    break;
-                case 2:
-                    deque.addFirst(str[1]);
-                    stack.push(2);
-                    break;
-                case 3:
-                    int lastButton = stack.pop();
-                    if(lastButton==1){
-                        deque.removeLast();
-                    }
-                    else if(lastButton==2){
-                        deque.removeFirst();
-                    }
-                    break;
-            }
+            
+            processButton(button,str,deque,stack);
         }
 
         if (!deque.isEmpty()) {
@@ -65,5 +45,29 @@ public class Main {
             System.out.println(0);
         }
 
+    }
+
+    public static void processButton(int button,String [] s,Deque<String> deque,Stack<Integer> stack) {
+        switch (button) {
+            case 1:
+                deque.addLast(s[1]); //뒤에 추가
+                stack.push(1);
+                break;
+            case 2:
+                deque.addFirst(s[1]); //앞에 추가
+                stack.push(2);
+                break;
+            case 3:
+                if (!deque.isEmpty() && !stack.isEmpty()) {
+                    int lastButton = stack.pop();
+                    if(lastButton==1){
+                        deque.removeLast();
+                    }
+                    else if(lastButton==2){
+                        deque.removeFirst();
+                    }
+                }
+                break;
+        }
     }
 }
