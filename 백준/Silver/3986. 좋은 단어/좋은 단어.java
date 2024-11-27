@@ -1,56 +1,55 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-
-
-/* 입력
-첫 줄에 단어의 수 N
-A,와 B로 이루어지 단어가 한줄에 하나씩
-* */
-
-/* 출력
-좋은 단어 갯수 출력
-* */
-
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
 /*
-A는A,B는B와 각각 연결
-연결선이 교차하지 않고, 각 글자를 다른위치의 같은 글자와 짝이 지어져야한다
-=>남는 글자가 있다. 좋은단어 xx
-==> 스택에 쌓아 올려서 맞닿아있는것이 겹치면 둘다 삭제.
-==>스택에 아무것도 없어야 좋은단어
+* 입력
+첫째줄에 단어 수 N (1<= N <=10000 )
+둘째 줄~ N개 줄 A와 B로만 이루어진 단어가 한 줄에 하나씩
+*
+* 출력
+좋은 단어의 수를 출력
+* */
+
+/* 문제해결
+스택에 쌓아올려서 맞닿은것이 짝이면 삭제
+문자열로 입력받으니까 위치값으로 해당 문자 넣어줌
+=>빈스택이라면 좋은단어
+문자열길이가 홀수면 좋은단어 절대로 불가능
+
 * */
 public class Main {
-    static int cnt;
+
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-        for (int i = 0; i < N; i++) {
+        int n = Integer.parseInt(br.readLine());
+        int cnt=0;
+        for (int i = 0; i < n; i++) {
             String s = br.readLine();
-            goodwords(s);
-
+            if(goodwords(s)) cnt++; //빈 스택이라면 ++
         }
         System.out.println(cnt);
+        br.close();
     }
-    static void goodwords(String s){
+
+    public static boolean goodwords(String s) {
         Stack<Character> stack = new Stack<>();
-        stack.push(s.charAt(0)); //첫단어는 스택에 먼저 넣어줌
-        for (int i = 1; i < s.length(); i++) {
-            if(!stack.isEmpty() && stack.peek() == s.charAt(i)){
-                //스택이 0이 아니고 맞닿아있는거와 같으면
-                //기존것 스택에서 꺼내줘야함
-                stack.pop();
-            } else{
-                stack.push(s.charAt(i)); //다르면 스택에 쌓아줌
+
+        if (s.length() % 2 != 0) {
+            return false;}
+
+            stack.push(s.charAt(0)); //첫단어는 먼저 스택에 넣어둠
+            for (int i = 1; i < s.length(); i++) {
+                if (!stack.isEmpty() && stack.peek() == s.charAt(i)) { //맞닿아 있는것과 같으면 저장된거 꺼냄
+                    stack.pop();
+                } else { //같지않으면 스택에 넣어줌
+                    stack.push(s.charAt(i));
+                }
             }
-        }
-        if(stack.isEmpty()){
-            cnt++;
-        }
-
+            return stack.isEmpty(); //빈 스택인지아닌지 값 넘겨줌
     }
-
 }
