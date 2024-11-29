@@ -50,6 +50,9 @@ public class Main {
                     cnt++;
                     name = s;
                 }
+                if(cnt>1){
+                    break; //2이상이라면 무조건 ?출력
+                }
             }
             if(cnt ==0) sb.append("!").append("\n");
             else if(cnt ==1) sb.append(name).append("\n");
