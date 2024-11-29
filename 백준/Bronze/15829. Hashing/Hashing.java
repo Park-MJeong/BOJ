@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,6 +23,8 @@ a는 아스키 코드로 97번
 해당 문자열은 테이블에서 해당 숫자를 찾아 두개를 곱한다.
 문자열끼리의 값은 더해준다.
 
+유한한 범위의 출력을 가지므로 주어진 m (1234567891)으로 나눈 나머지 출력
+
 * */
 public class Main {
 
@@ -31,20 +32,20 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Hashtable<Character,Integer> table = new Hashtable<>() ;
         int n = Integer.parseInt(br.readLine());
+        int m =1234567891;
         String s = br.readLine();
 
-        int sum = 0;
+        long sum = 0;
+        long r =1;
 
         for(int i=1 ; i<=26 ; i++){
             table.put((char)(96+i),i);
         }
         for(int i=0 ; i<n ; i++){
-            sum+= table.get(s.charAt(i))* Math.pow(31, i);
+            sum+= (table.get(s.charAt(i))* r) % m ;
+            r =(r*31) % m;
         }
-        System.out.println(sum);
+        System.out.println(sum%m);
 
     }
 }
-
-
-
