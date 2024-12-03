@@ -13,10 +13,11 @@ import java.util.*;
 
 /* 문제해결
 활성화된것은 경험치가 0이된다.
-최댓값을 구하려면 
+최댓값을 구하려면
 작은순서부터 활성화되고
 가장 큰 값이 마지막에 활성화 되어야한다.
 =>활성화되면 그값은 0 이되고 다른수에 더해지기때문에 남아있는 스톤의 경험치가 클 수록 좋다.
+활성화 갯수가 최대가 되면 그 이후로 남은 스톤은 활성화갯수만큼 경험치가 더해진다.
 
 우선순위큐a에 입력값을 넣어주고
 처음 활성화 => 값을 빼내고,cnt++1
@@ -32,28 +33,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PriorityQueue<Long>pq = new PriorityQueue();
-        PriorityQueue<Long>pq2 = new PriorityQueue();
+
         String [] str = br.readLine().split(" ");
         String [] str2 = br.readLine().split(" ");
+
         long n = Long.parseLong(str[0]); //경험치 수
         long k = Long.parseLong(str[1]); // 활성화 갯수
-        long result = 0L;
-        int cnt =0;
+        long result = 0L; //결과값
+
         for (int i = 0; i < n; i++) {
             pq.offer(Long.parseLong(str2[i]));
         }
-        while (cnt<=k && !pq.isEmpty()) { //활성화 할때
-            Long m = pq.poll();
-            pq2.offer(m*cnt);
-            cnt++;
-        }
 
-        while (!pq2.isEmpty()) { //활성화 되었던 스톤
-            result += pq2.poll();
+        pq.poll();
+        int cnt =1; //현재까지 활성화된 스톤 갯수
 
-        }
-        while(!pq.isEmpty()){ //남아있는 스톤
-            result += pq.poll()*k;
+        while (!pq.isEmpty()) {
+            if(cnt<k){
+                result += pq.poll() * cnt;
+                cnt++;
+            }else {
+                result+=pq.poll()*k;
+            }
         }
 
         System.out.println(result);
