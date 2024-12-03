@@ -13,17 +13,19 @@ import java.util.*;
 
 /* 문제해결
 활성화된것은 경험치가 0이된다.
+최댓값을 구하려면 
 작은순서부터 활성화되고
 가장 큰 값이 마지막에 활성화 되어야한다.
+=>활성화되면 그값은 0 이되고 다른수에 더해지기때문에 남아있는 스톤의 경험치가 클 수록 좋다.
+
 우선순위큐a에 입력값을 넣어주고
 처음 활성화 => 값을 빼내고,cnt++1
 두번째 활성화부터는  => 값을 빼내고, cnt++1, cnt*값 다른 큐b에 넣어줌
-cnt만큼 반복하고
-b를 결과값에 더한다.
+cnt만큼 반복하고 b를 결과값에 더한다.
 a에 남은것은 활성화스톤 수 만큼 곱해줌
 
 
-다른큐의 값에
+**null pointer에러로 모든 while문에 공백이 아닐때 조건을 추가해줌
 * */
 public class Main {
 
@@ -40,17 +42,17 @@ public class Main {
         for (int i = 0; i < n; i++) {
             pq.offer(Long.parseLong(str2[i]));
         }
-        while (cnt<=k && !pq.isEmpty()) {
+        while (cnt<=k && !pq.isEmpty()) { //활성화 할때
             Long m = pq.poll();
             pq2.offer(m*cnt);
             cnt++;
         }
 
-        while (!pq2.isEmpty()) {
+        while (!pq2.isEmpty()) { //활성화 되었던 스톤
             result += pq2.poll();
 
         }
-        while(!pq.isEmpty()){
+        while(!pq.isEmpty()){ //남아있는 스톤
             result += pq.poll()*k;
         }
 
