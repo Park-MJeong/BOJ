@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 /*
@@ -40,12 +41,16 @@ public class Main {
         for(int i=0; i<arrB.length; i++){
             bIndex[i]=i;
         }
-        Arrays.sort(bIndex,(i,j)->arrB[i]-arrB[j]); //오름차순 정렬
+        Arrays.sort(bIndex, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return arrB[o1] - arrB[o2]; 
+            }
+        }); //오름차순 정렬
         int result=0; //결과값 저장
         for(int i=0; i<n;i++){
             result+=arrA[n-1-i]*arrB[bIndex[i]];
         }
         System.out.println(result);
-
     }
 }
