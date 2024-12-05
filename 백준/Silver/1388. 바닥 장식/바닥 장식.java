@@ -23,8 +23,8 @@ public class Main {
 
     static int x,y;
     static boolean[][]check;
-    static int[][] vecX = {{1, 0}, {-1, 0}}; //가로이동 방향
-    static int[][] vecY = {{0, 1}, {0, -1}};
+    static int[][] vecX = {{1, 0}, {-1, 0}}; //세로이동 방향
+    static int[][] vecY = {{0, 1}, {0, -1}}; //가로이동 방향
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
