@@ -1,76 +1,59 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 /*
-* 입력
-점 N 선분 M
-N개 점의 좌표
-M개의 줄에 선분의 시작S 끝점E
+* 입력 *
+* 첫째 줄에 점의 개수 N개 , 선분의 개수 M개
+* 둘째 줄에 점의 좌표 N개
+* M개의 줄에 선분의 시작점과 끝점
 
-* 출력
-각각의 선분위에 입력으로 주어진 점 출력
-* */
-/*
- * 문제해결
-S~E사이에 주어진점의 좌표가 몇개 포함되는지 갯수를 출력하면된다.
-선분의 위치가 dot의 중간값 보다 크면 오른쪽 탐색, 작으면 왼쪽탐색
-* 선분의 시작위치
-위치와 중간값이 같으면 시작위치니까 왼쪽 탐색
-* 선분의 마지막 위치
-위치와 중간값이 같으면 마지막 위치니까 오른쪽 탐색
- *
- */
-
+* 출력 *
+* 선분 위에 입력으로 주어진 점의 개수 출력
+*
+* 문제해결
+*
+*
+*/
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         String [] str = br.readLine().split(" ");
         int n = Integer.parseInt(str[0]);
         int m = Integer.parseInt(str[1]);
-
-        int []dots = new int[n];
-
-        String[] str1 = br.readLine().split(" ");
+        String [] str2 = br.readLine().split(" ");
+        int [] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            dots[i] = Integer.parseInt(str1[i]);
+            arr[i] = Integer.parseInt(str2[i]);
         }
-        Arrays.sort(dots); //이분탐색을 위해 오름차순
+        Arrays.sort(arr);
 
         for (int i = 0; i < m; i++) {
-            String[] str2 = br.readLine().split(" ");
-            int s=Integer.parseInt(str2[0]);
-            int e=Integer.parseInt(str2[1]);
+            str = br.readLine().split(" ");
+            int a = Integer.parseInt(str[0]);
+            int b = Integer.parseInt(str[1]);
 
-            int s_index = binary(dots,s,"s");
-            int e_index = binary(dots,e,"e");
-            sb.append( (e_index+1) - s_index ).append("\n");
+            int startPoint = binarySearch(arr,a);
+            int endPoint = binarySearch(arr,b+1);
+
+
+            sb.append(endPoint - startPoint).append("\n");
         }
         System.out.println(sb);
+
     }
-    static int binary(int[] dots, int start, String check) {
-        int left = 0;
-        int right = dots.length-1;
 
-        while (left <= right) {
-            int mid = (left + right)/2;
+    static int binarySearch(int [] arr,int x) {
+        int start = 0;
+        int end = arr.length;
 
-            if(check.equals("s")){ //선분 시작
-                if(dots[mid]<start){
-                    left = mid+1;
-                }else right = mid-1;
-            }
-            if(check.equals("e")){ //선분 끝
-                if(dots[mid]<=start){  //오른쪽 탐색
-                    left = mid+1;
-                }else  right = mid-1; //왼쪽탐색
-            }
+
+        while (start < end) {
+            int mid = (start + end)/2;
+            if(arr[mid] < x){
+                start = mid+1;
+            }else end = mid;
         }
-        return (check.equals("s")?left:right);
+        return start;
     }
-
-
 }
