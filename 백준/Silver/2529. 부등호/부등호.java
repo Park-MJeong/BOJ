@@ -12,7 +12,7 @@ public class Main{
         String [] str = br.readLine().split(" ");
         arr = new char[k];
         for (int i = 0; i < k; i++) {
-            arr[i] = str[i].charAt(0);
+            arr[i] = str[i].charAt(0); //문자열 문자 변환
         }
         for (int i = 0; i < 10; i++) {
             visit[i] = true; //방문처리
