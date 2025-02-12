@@ -1,7 +1,4 @@
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 /*
@@ -26,14 +23,14 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
 
-        int n = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine()); //거점지 방문횟수
         for (int i = 0; i < n; i++) {
             String[] arr = br.readLine().split(" ");
-            if(arr[0].equals("0")){
+            if(arr[0].equals("0")){ //아이들 만난것
                 if(pq.isEmpty()) sb.append(-1).append("\n");
                 else sb.append(pq.poll()).append("\n");
             }else {
-                for(int j = 1; j < arr.length; j++) {
+                for(int j = 1; j < arr.length; j++) { //선물 충전
                     pq.offer(Integer.parseInt(arr[j]));
                 }
             }
